@@ -29,15 +29,7 @@ foreach ($file in $files) {
     Invoke-WebRequest -Uri $url -OutFile $localPath -UseBasicParsing
 }
 
-# Création du raccourci sur le bureau
-$desktopPath = [Environment]::GetFolderPath("Desktop")
-$shortcutPath = Join-Path $desktopPath "ScriptManager.lnk"
-$shell = New-Object -ComObject WScript.Shell
-$shortcut = $shell.CreateShortcut($shortcutPath)
-$shortcut.TargetPath = "powershell.exe"
-$shortcut.Arguments = "-ExecutionPolicy Bypass -File `"$installDir\ScriptManager.ps1`""
-$shortcut.WorkingDirectory = $installDir
-$shortcut.IconLocation = "powershell.exe,0"
-$shortcut.Save()
+# Lancement direct de l'application ScriptManager
+Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$installDir\ScriptManager.ps1`"" -Verb RunAs
 
-Write-Host "Installation terminée! Un raccourci a été créé sur votre bureau." -ForegroundColor Green
+Write-Host "Installation terminée ! ScriptManager est lancé." -ForegroundColor Green
