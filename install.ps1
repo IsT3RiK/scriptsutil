@@ -7,7 +7,7 @@ if (-not (Test-Path $installDir)) {
 }
 
 # Téléchargement des fichiers depuis GitHub
-$baseUrl = "https://raw.githubusercontent.com/VotreNomUtilisateur/VotreRepo/main"
+$baseUrl = "https://raw.githubusercontent.com/IsT3RiK/scriptsutil/main"
 $files = @(
     "ScriptManager.ps1",
     "modules/UI.psm1",
