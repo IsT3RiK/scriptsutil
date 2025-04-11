@@ -1,5 +1,8 @@
 # Module GitHubManager - Gestion des scripts sur GitHub
 
+# Ajout pour permettre l'utilisation de System.Windows.Forms.MessageBox
+Add-Type -AssemblyName System.Windows.Forms
+
 function Test-GitHubConnection {
     try {
         $response = Invoke-WebRequest -Uri "https://github.com" -UseBasicParsing -TimeoutSec 5
@@ -47,7 +50,7 @@ function Get-ScriptsByCategory {
     }
     else {
         # Si pas de metadata, on crée une liste basique
-        $scriptFiles = Get-ChildItem -Path $global:Config.LocalCachePath -Filter "*.ps1"
+        $scriptFiles = Get-ChildItem -Path $global:Config.LocalCachePath -Filter "*.ps1" -Recurse
         foreach ($file in $scriptFiles) {
             # On essaie d'extraire des infos du contenu du script
             $content = Get-Content $file.FullName -Raw
