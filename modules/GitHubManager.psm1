@@ -16,20 +16,26 @@ function Test-GitHubConnection {
 
 function Update-ScriptList {
     try {
-        $apiUrl = "https://api.github.com/repos/$($global:Config.GitHubUser)/$($global:Config.GitHubRepo)/contents"
+        # Utilisation de l'API GitHub pour lister tous les fichiers du repo de façon récursive
+        $branch = $global:Config.Branch
+        $apiUrl = "https://api.github.com/repos/$($global:Config.GitHubUser)/$($global:Config.GitHubRepo)/git/trees/$branch?recursive=1"
         $response = Invoke-RestMethod -Uri $apiUrl
-        
+
         # Nettoyer le cache
         Remove-Item -Path "$($global:Config.LocalCachePath)\*" -Recurse -Force -ErrorAction SilentlyContinue
-        
-        foreach ($item in $response) {
-            if ($item.type -eq "file" -and $item.name -like "*.ps1") {
-                $content = Invoke-RestMethod -Uri $item.download_url
-                $localPath = Join-Path $global:Config.LocalCachePath $item.name
-                $content | Out-File -FilePath $localPath -Force
+
+        foreach ($item in $response.tree) {
+            if ($item.type -eq "blob" -and $item.path -like "*.ps1") {
+                $rawUrl = "https://raw.githubusercontent.com/$($global:Config.GitHubUser)/$($global:Config.GitHubRepo)/$branch/$($item.path)"
+                $localPath = Join-Path $global:Config.LocalCachePath ($item.path -replace '/', '\')
+                $localDir = Split-Path -Parent $localPath
+                if (-not (Test-Path $localDir)) {
+                    New-Item -ItemType Directory -Path $localDir -Force | Out-Null
+                }
+                Invoke-WebRequest -Uri $rawUrl -OutFile $localPath -UseBasicParsing
             }
         }
-        
+
         return $true
     }
     catch {
