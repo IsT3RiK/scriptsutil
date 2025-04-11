@@ -31,7 +31,7 @@ Gestionnaire de scripts PowerShell personnalisés avec interface graphique et in
 3. Sur un poste client, exécutez la commande suivante dans PowerShell :
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/VotreNomUtilisateur/VotreRepo/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/IsT3RiK/scriptsutil/main/install.ps1 | iex
 ```
 
 Un raccourci sera créé sur le bureau pour lancer le gestionnaire.
