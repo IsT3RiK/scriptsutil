@@ -1,0 +1,16 @@
+[
+  {
+    "Name": "RDPRollBack",
+    "Description": "Restaure la configuration RDP par défaut.",
+    "Category": "Réseau",
+    "Version": "1.0",
+    "RawUrl": "https://raw.githubusercontent.com/IsT3RiK/scriptsutil/main/modules/scripts/RDPScripts/RDPRollBack.ps1"
+  },
+  {
+    "Name": "NetTest",
+    "Description": "Test de connectivité réseau avancé.",
+    "Category": "Réseau",
+    "Version": "1.0",
+    "RawUrl": "https://raw.githubusercontent.com/IsT3RiK/scriptsutil/main/modules/scripts/Network/NetTest.ps1"
+  }
+]
